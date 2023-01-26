@@ -8,6 +8,7 @@ export default {
       showInfo: false,
       products: [],
       newProductParams: {},
+      currentProduct: {},
     };
   },
   created: function () {
@@ -27,6 +28,10 @@ export default {
         this.products.push(response.data);
         this.newProductParams = {};
       })},
+    showProduct: function (product) {
+      this.currentProduct = product;
+      document.querySelector("#product-details").showModal();
+    }
     },
   };
 </script>
@@ -46,8 +51,19 @@ export default {
     <div v-for="product in products" v-bind:key="product.id">
     <h3>{{ product.name }}</h3>
     <p>{{ product.price }}</p>
+    <button v-on:click="showProduct(product)">More product info</button>
     <hr />
   </div>
+  <dialog id="product-details">
+  <form method="dialog">
+    <h1>Product info</h1>
+    <p>Name: {{ currentProduct.name }}</p>
+    <p>Price: {{ currentProduct.price }}</p>
+    <p>Description: {{ currentProduct.description }}</p>
+    <!-- <p>Supplier: {{ currentProduct.supplier['name'] }}</p> -->
+    <button>Close</button>
+  </form>
+</dialog>
   </div>
 </template>
 
